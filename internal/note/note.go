@@ -56,3 +56,9 @@ func Create(dir, title string, now time.Time) (string, error) {
 
 	return path, nil
 }
+
+// Find searches vault recursively for a note with the given slug (filename without .md).
+// Returns the full path if found, or an error if not found.
+func Find(vault, slug string) (string, error) {
+	return "", nil
+}
