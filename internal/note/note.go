@@ -59,7 +59,26 @@ func Create(dir, title string, now time.Time) (string, error) {
 
 // List returns all .md files in vault as relative paths, sorted alphabetically.
 func List(vault string) ([]string, error) {
-	return nil, nil
+	var paths []string
+
+	err := filepath.WalkDir(vault, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() && filepath.Ext(d.Name()) == ".md" {
+			rel, err := filepath.Rel(vault, path)
+			if err != nil {
+				return err
+			}
+			paths = append(paths, rel)
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("listing vault: %w", err)
+	}
+
+	return paths, nil
 }
 
 // Find searches vault recursively for a note with the given slug (filename without .md).

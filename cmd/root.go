@@ -62,6 +62,7 @@ func Execute() {
 	rootCmd.AddCommand(NewNoteCmd(cfgPath))
 	rootCmd.AddCommand(NewEditCmd(cfgPath))
 	rootCmd.AddCommand(NewScratchCmd(cfgPath))
+	rootCmd.AddCommand(NewListCmd(cfgPath))
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
