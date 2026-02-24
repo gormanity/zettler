@@ -3,9 +3,19 @@ package config
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/BurntSushi/toml"
 )
+
+// DefaultPath returns the default config file path.
+func DefaultPath() (string, error) {
+	dir, err := os.UserConfigDir()
+	if err != nil {
+		return "", fmt.Errorf("finding config directory: %w", err)
+	}
+	return filepath.Join(dir, "zettler", "config.toml"), nil
+}
 
 // Config holds the zettler configuration.
 type Config struct {

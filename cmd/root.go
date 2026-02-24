@@ -22,8 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"os"
 
+	"github.com/gormanity/zettler/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -49,9 +51,15 @@ func NewRootCmd() *cobra.Command {
 // appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	rootCmd := NewRootCmd()
-	err := rootCmd.Execute()
+	cfgPath, err := config.DefaultPath()
 	if err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+
+	rootCmd := NewRootCmd()
+	rootCmd.AddCommand(NewJournalCmd(cfgPath))
+	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
