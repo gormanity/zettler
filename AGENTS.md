@@ -24,6 +24,8 @@ See `PROJECT.md` for architecture, design decisions, and planned commands.
 - Commits should be **atomic and tightly scoped** — one logical change per commit.
 - Use `jj describe -m "message"` to set the commit message, then `jj new` to open
   the next change.
+- To push to main: `jj bookmark set main -r <rev>` then `jj git push --branch main`.
+  Do NOT use `jj git push --change` — it creates unwanted push-* bookmarks.
 
 ### TDD
 
