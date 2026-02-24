@@ -40,6 +40,12 @@ install: build
 	@echo "🚀 Installing $(BINARY_NAME)..."
 	@mv $(BUILD_DIR)/$(BINARY_NAME) $$GOPATH/bin/
 
+## 🗑️ Uninstall the binary
+.PHONY: uninstall
+uninstall:
+	@echo "🗑️ Uninstalling $(BINARY_NAME)..."
+	@rm -f $$GOPATH/bin/$(BINARY_NAME)
+
 ## 🗑️ Clean up build artifacts
 .PHONY: clean
 clean:
@@ -66,6 +72,7 @@ help:
 	@echo "  make test        - Run tests"
 	@echo "  make fmt         - Format and lint code"
 	@echo "  make install     - Install binary to \$GOPATH/bin"
+	@echo "  make uninstall   - Remove binary from \$GOPATH/bin"
 	@echo "  make clean       - Remove build artifacts"
 	@echo "  make cross-build - Build for multiple platforms"
 	@echo "  make release     - Format, test, and build"
