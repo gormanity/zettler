@@ -57,6 +57,11 @@ func Create(dir, title string, now time.Time) (string, error) {
 	return path, nil
 }
 
+// List returns all .md files in vault as relative paths, sorted alphabetically.
+func List(vault string) ([]string, error) {
+	return nil, nil
+}
+
 // Find searches vault recursively for a note with the given slug (filename without .md).
 // Returns the full path if found, or an error if not found.
 func Find(vault, slug string) (string, error) {
