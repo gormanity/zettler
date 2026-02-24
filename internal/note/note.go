@@ -60,5 +60,24 @@ func Create(dir, title string, now time.Time) (string, error) {
 // Find searches vault recursively for a note with the given slug (filename without .md).
 // Returns the full path if found, or an error if not found.
 func Find(vault, slug string) (string, error) {
-	return "", nil
+	target := slug + ".md"
+	var found string
+
+	err := filepath.WalkDir(vault, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() && d.Name() == target {
+			found = path
+			return filepath.SkipAll
+		}
+		return nil
+	})
+	if err != nil {
+		return "", fmt.Errorf("searching vault: %w", err)
+	}
+	if found == "" {
+		return "", fmt.Errorf("note not found: %s", slug)
+	}
+	return found, nil
 }
