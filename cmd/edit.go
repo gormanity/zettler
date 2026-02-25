@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 
 	"github.com/gormanity/zettler/internal/config"
@@ -31,7 +32,11 @@ func NewEditCmd(cfgPath string) *cobra.Command {
 				return fmt.Errorf("no editor configured: set $EDITOR or editor in config")
 			}
 
-			return exec.Command(editor, path).Run()
+			c := exec.Command(editor, path)
+			c.Stdin = os.Stdin
+			c.Stdout = os.Stdout
+			c.Stderr = os.Stderr
+			return c.Run()
 		},
 	}
 }
