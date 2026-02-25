@@ -9,12 +9,17 @@ import (
 )
 
 // DefaultPath returns the default config file path.
+// It respects $XDG_CONFIG_HOME, falling back to ~/.config.
 func DefaultPath() (string, error) {
-	dir, err := os.UserConfigDir()
-	if err != nil {
-		return "", fmt.Errorf("finding config directory: %w", err)
+	base := os.Getenv("XDG_CONFIG_HOME")
+	if base == "" {
+		home, err := os.UserHomeDir()
+		if err != nil {
+			return "", fmt.Errorf("finding home directory: %w", err)
+		}
+		base = filepath.Join(home, ".config")
 	}
-	return filepath.Join(dir, "zettler", "config.toml"), nil
+	return filepath.Join(base, "zettler", "config.toml"), nil
 }
 
 // Config holds the zettler configuration.
