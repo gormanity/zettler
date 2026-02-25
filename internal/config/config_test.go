@@ -8,6 +8,36 @@ import (
 	"github.com/gormanity/zettler/internal/config"
 )
 
+func TestDefaultPath(t *testing.T) {
+	t.Run("uses XDG_CONFIG_HOME when set", func(t *testing.T) {
+		t.Setenv("XDG_CONFIG_HOME", "/custom/config")
+		got, err := config.DefaultPath()
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		want := "/custom/config/zettler/config.toml"
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
+
+	t.Run("falls back to ~/.config when XDG_CONFIG_HOME unset", func(t *testing.T) {
+		t.Setenv("XDG_CONFIG_HOME", "")
+		home, err := os.UserHomeDir()
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := config.DefaultPath()
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		want := filepath.Join(home, ".config", "zettler", "config.toml")
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
+}
+
 func TestLoad(t *testing.T) {
 	dir := t.TempDir()
 	cfgPath := filepath.Join(dir, "config.toml")
