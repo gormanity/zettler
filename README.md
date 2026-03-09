@@ -44,3 +44,14 @@ tags: []
 ```
 
 Filenames use kebab-case slugs derived from the title (e.g. `my-note.md`).
+
+Journal entries include a blank `location:` field in their frontmatter:
+
+```markdown
+---
+title: "Journal - February 24, 2026"
+created: 2026-02-24
+location:
+tags: []
+---
+```

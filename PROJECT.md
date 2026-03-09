@@ -41,6 +41,16 @@ tags: []
 ```
 
 Journal entries use title format: `"Journal - February 24, 2026"`
+They include frontmatter in this shape:
+
+```markdown
+---
+title: "Journal - February 24, 2026"
+created: 2026-02-24
+location:
+tags: []
+---
+```
 
 ## Commands
 

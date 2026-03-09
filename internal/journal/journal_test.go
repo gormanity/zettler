@@ -41,8 +41,14 @@ func TestEnsureEntry(t *testing.T) {
 		if !strings.Contains(content, "created: 2026-02-24") {
 			t.Errorf("missing created in frontmatter:\n%s", content)
 		}
+		if !strings.Contains(content, "location: ") {
+			t.Errorf("missing location in frontmatter:\n%s", content)
+		}
 		if !strings.Contains(content, "tags: []") {
 			t.Errorf("missing tags in frontmatter:\n%s", content)
+		}
+		if strings.Index(content, "location: ") > strings.Index(content, "tags: []") {
+			t.Errorf("location should appear before tags in frontmatter:\n%s", content)
 		}
 	})
 

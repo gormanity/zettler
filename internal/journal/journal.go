@@ -25,7 +25,7 @@ func EnsureEntry(vault string, date time.Time) (string, error) {
 		return path, nil
 	}
 
-	content := fmt.Sprintf("---\ntitle: %q\ncreated: %s\ntags: []\n---\n",
+	content := fmt.Sprintf("---\ntitle: %q\ncreated: %s\nlocation: \ntags: []\n---\n",
 		"Journal - "+date.Format("January 2, 2006"),
 		date.Format("2006-01-02"),
 	)
